@@ -3,7 +3,7 @@ import styled from 'styled-components/macro'
 
 const StyledHeader = styled.div`
   background-color: ${({ theme }) => theme.colorHeaderBackground};
-  padding: 2em;
+  padding: 30px;
 `
 
 const Title = styled.h1`
