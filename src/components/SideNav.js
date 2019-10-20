@@ -3,6 +3,7 @@ import styled from 'styled-components/macro'
 
 const Container = styled.div`
   width: 100%;
+  padding-top: 50px;
 `
 
 const StyledSideNav = styled.div`
@@ -39,9 +40,9 @@ const Contact = styled.div`
   }
 `
 
-const SideNav = () => {
+const SideNav = ({ className }) => {
   return (
-    <Container>
+    <Container className={className}>
       <StyledSideNav>
         <NavLink active>About SafetyWing and Remote Health</NavLink>
         <NavLink active={false}>Insurance coverage</NavLink>

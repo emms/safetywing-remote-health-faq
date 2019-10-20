@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 
-const StyledHeader = styled.div`
-  padding: 30px;
+const StyledTitleHeader = styled.div`
+  padding: 30px 0 0 30px;
   background-color: ${({ theme }) => theme.color.header.background};
   color: ${({ theme }) => theme.color.header.foreground};
 `
@@ -13,11 +13,11 @@ const Title = styled.h1`
   text-transform: capitalize;
 `
 
-const Header = ({ title, children }) => (
-  <StyledHeader>
+const TitleHeader = ({ className, title, children }) => (
+  <StyledTitleHeader className={className}>
     <Title>{title}</Title>
     {children}
-  </StyledHeader>
+  </StyledTitleHeader>
 )
 
-export default Header
+export default TitleHeader

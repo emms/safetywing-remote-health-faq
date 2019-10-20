@@ -2,6 +2,30 @@ import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 
 const StyledQAItem = styled.div`
+  position: relative;
+  padding-left: 30px;
+
+  ::before {
+    content: ' ';
+    width: 0;
+    height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 7px solid
+      ${props =>
+        props.showAnswer
+          ? props.theme.color.primary.foreground
+          : props.theme.color.primary.background};
+    border-top: 7px solid
+      ${props =>
+        props.showAnswer
+          ? props.theme.color.primary.background
+          : props.theme.color.primary.foreground};
+    position: absolute;
+    top: ${props => (props.showAnswer ? '-2px' : '5px')};
+    left: 0;
+  }
+
   > h4 {
     margin: 0;
     padding-bottom: ${props => (props.showAnswer ? '0' : '60px')};

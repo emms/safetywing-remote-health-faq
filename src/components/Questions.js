@@ -1,9 +1,16 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 import QAItem from 'components/QAItem'
+import { media } from 'styles'
 
 const QuestionsContainer = styled.div`
-  padding-right: 50px;
+  padding: 30px;
+  padding-bottom: 0;
+
+  ${media.tabletPortraitUp`
+    padding: 50px;
+    padding-bottom: 0;
+  `}
 `
 
 const Category = styled.div`
@@ -24,9 +31,9 @@ const ListItem = styled.li`
   padding-top: 20px;
 `
 
-const Questions = () => {
+const Questions = ({ className }) => {
   return (
-    <QuestionsContainer>
+    <QuestionsContainer className={className}>
       <Category>
         <QAItem question="What is the difference between SafetyWing Nomad insurance and SafetyWing Remote Health?" />
         <QAItem question="What is the difference in coverage between Remote Health for Teams and Remote Health for Individuals?">

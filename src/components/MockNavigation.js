@@ -12,6 +12,7 @@ const MockNavigationContent = styled.div`
   top: 0;
   left: 0;
   background-color: ${({ theme }) => theme.color.navigation.background};
+  z-index: 1;
 `
 
 export default () => (
