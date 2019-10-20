@@ -7,14 +7,23 @@ const Container = styled.div`
 
 const StyledSideNav = styled.div`
   position: fixed;
-  padding-left: 50px;
+  display: flex;
+  flex-direction: column;
 `
 
 const NavLink = styled.h3`
   margin: 0;
-  padding: 10px 10px 10px 0;
+  padding: 10px 10px 10px 50px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
   background-color: ${props =>
-    props.active ? props.theme.colorLinkBackground : 'transparent'}
+    props.active
+      ? props.theme.color.sideNavActive.background
+      : props.theme.color.sideNav.background};
+  color: ${props =>
+    props.active
+      ? props.theme.color.sideNavActive.foreground
+      : props.theme.color.sideNav.foreground};
 
   &:not(:first-child) {
     margin-top: 30px;
@@ -22,11 +31,11 @@ const NavLink = styled.h3`
 `
 
 const Contact = styled.div`
-  padding-top: 80px;
+  padding: 80px 0 0 50px;
 
   > a {
     text-decoration: none;
-    color: ${({ theme }) => theme.colorLinks};
+    color: ${({ theme }) => theme.color.link.foreground};
   }
 `
 
@@ -35,9 +44,9 @@ const SideNav = () => {
     <Container>
       <StyledSideNav>
         <NavLink active>About SafetyWing and Remote Health</NavLink>
-        <NavLink>Insurance coverage</NavLink>
-        <NavLink>Signing up and pricing</NavLink>
-        <NavLink>Getting treatment and making claims</NavLink>
+        <NavLink active={false}>Insurance coverage</NavLink>
+        <NavLink active={false}>Signing up and pricing</NavLink>
+        <NavLink active={false}>Getting treatment and making claims</NavLink>
         <Contact>
           Can't find what you're looking for? <a href="/">Contact us</a>
         </Contact>

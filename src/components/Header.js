@@ -2,14 +2,14 @@ import React from 'react'
 import styled from 'styled-components/macro'
 
 const StyledHeader = styled.div`
-  background-color: ${({ theme }) => theme.colorHeaderBackground};
   padding: 30px;
+  background-color: ${({ theme }) => theme.color.header.background};
+  color: ${({ theme }) => theme.color.header.foreground};
 `
 
 const Title = styled.h1`
   margin: 0;
   font-size: 40px;
-  color: #fff;
   text-transform: capitalize;
 `
 

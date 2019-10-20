@@ -5,10 +5,10 @@ const StyledTextInput = styled.input`
   width: 350px;
   padding: 10px;
   border: none;
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid ${({ theme }) => theme.color.header.foreground};
   font-size: 16px;
   background-color: transparent;
-  color: #fff;
+  color: ${({ theme }) => theme.color.header.foreground};
 
   ::placeholder {
     color: #bebebe;

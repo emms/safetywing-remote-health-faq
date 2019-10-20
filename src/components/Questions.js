@@ -8,7 +8,7 @@ const QuestionsContainer = styled.div`
 
 const Category = styled.div`
   &:not(:last-child) {
-    border-bottom: 1px solid ${({ theme }) => theme.colorCategory};
+    border-bottom: 1px solid ${({ theme }) => theme.color.category.foreground};
   }
 
   &:not(:first-child) {

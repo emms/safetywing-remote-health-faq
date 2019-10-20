@@ -3,7 +3,19 @@ import styled from 'styled-components/macro'
 
 const MockNavigation = styled.div`
   height: 50px;
-  background-color: ${({ theme }) => theme.colorNavigation};
 `
 
-export default () => <MockNavigation />
+const MockNavigationContent = styled.div`
+  height: 50px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: ${({ theme }) => theme.color.navigation.background};
+`
+
+export default () => (
+  <MockNavigation>
+    <MockNavigationContent />
+  </MockNavigation>
+)

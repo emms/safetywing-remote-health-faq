@@ -17,13 +17,40 @@ export const media = Object.keys(sizes).reduce((acc, label) => {
 }, {})
 
 export const theme = {
-  colorNavigation: '#626c8b29',
-  colorFooter: '#273C49',
-  colorHeaderBackground: '#333377',
-  colorText: '#273C49',
-  colorLinks: '#7ADDB6',
-  colorLinkBackground: '#F0F0FF',
-  colorCategory: '#5656C2',
+  color: {
+    header: {
+      background: '#333377',
+      foreground: '#FFF'
+    },
+    navigation: {
+      background: '#ebebf2',
+      foreground: '#273C49'
+    },
+    footer: {
+      background: '#273C49',
+      foreground: '#FFF'
+    },
+    sideNav: {
+      background: 'transparent',
+      foreground: '#BEBEBE'
+    },
+    sideNavActive: {
+      background: '#F0F0FF',
+      foreground: '#5656C2'
+    },
+    link: {
+      background: 'transparent',
+      foreground: '#7ADDB6'
+    },
+    category: {
+      background: 'transparent',
+      foreground: '#5656C2'
+    },
+    primary: {
+      background: 'transparent',
+      foreground: '#273C49'
+    }
+  },
   fontFamily: 'Helvetica'
 }
 
@@ -33,7 +60,8 @@ export const GlobalStyle = createGlobalStyle`
     width: 100%;
     height: 100%;
     font-family: ${({ theme }) => theme.fontFamily};
-    color: ${({ theme }) => theme.colorText};
+    color: ${({ theme }) => theme.color.primary.foreground};
+    background-color: ${({ theme }) => theme.color.primary.background};
   }
 
   #root {
