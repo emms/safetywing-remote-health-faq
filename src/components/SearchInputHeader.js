@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components/macro'
+import { media } from 'styles'
 
 const StyledTextInputHeader = styled.div`
   box-sizing: border-box;
@@ -10,7 +11,6 @@ const StyledTextInputHeader = styled.div`
 `
 
 const StyledTextInput = styled.input`
-  width: 350px;
   padding: 10px;
   border: none;
   border-bottom: 1px solid ${({ theme }) => theme.color.header.foreground};
@@ -24,6 +24,10 @@ const StyledTextInput = styled.input`
   &:focus {
     outline: none;
   }
+
+  ${media.tabletPortraitUp`
+    width: 350px;
+  `}
 `
 
 const SearchInputHeader = ({ className, onSearch }) => {

@@ -1,17 +1,17 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import { media } from 'styles'
 import TitleHeader from 'components/TitleHeader'
 import SearchInputHeader from 'components/SearchInputHeader'
 import SideNav from 'components/SideNav'
 import TabNav from 'components/TabNav'
 import DropdownNav from 'components/DropdownNav'
 import Questions from 'components/Questions'
+import { media } from 'styles'
 
 const StyledFAQPage = styled.div`
   display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 200px 90px 80px 1fr;
+  grid-template-columns: auto;
+  grid-template-rows: 180px 90px 80px auto;
   grid-template-areas:
     'titleheader'
     'searchinputheader'
@@ -19,15 +19,16 @@ const StyledFAQPage = styled.div`
     'content';
 
   ${media.tabletPortraitUp`
+    grid-template-rows: 120px 90px 80px auto;
     grid-template-areas:
-      'titleheader titleheader'
-      'searchinputheader searchinputheader'
+      'titleheader'
+      'searchinputheader'
       'tabnav'
       'content';
     `}
 
   ${media.tabletLandscapeUp`
-    grid-template-columns: minmax(400px, 1fr) 2fr;
+    grid-template-columns: 400px 1fr;
     grid-template-rows: 100px 100px 1fr;
     grid-template-areas:
       'titleheader titleheader'
@@ -49,9 +50,23 @@ const StyledSideNav = styled(SideNav)`
 
 const StyledDropdownNav = styled(DropdownNav)`
   grid-area: dropdownnav;
+  display: block;
+
+  ${media.tabletPortraitUp`
+    display: none;
+  `}
 `
 const StyledTabNav = styled(TabNav)`
   grid-area: tabnav;
+  display: none;
+
+  ${media.tabletPortraitUp`
+    display: flex;
+  `}
+
+  ${media.tabletLandscapeUp`
+    display: none;
+  `}
 `
 
 const StyledQuestions = styled(Questions)`

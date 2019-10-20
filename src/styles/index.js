@@ -31,7 +31,7 @@ export const theme = {
       foreground: '#FFF'
     },
     sideNav: {
-      background: 'transparent',
+      background: '#FFF',
       foreground: '#BEBEBE'
     },
     sideNavActive: {

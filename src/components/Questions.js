@@ -4,6 +4,7 @@ import QAItem from 'components/QAItem'
 import { media } from 'styles'
 
 const QuestionsContainer = styled.div`
+  box-sizing: border-box;
   padding: 30px;
   padding-bottom: 0;
 
