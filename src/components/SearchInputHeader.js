@@ -1,14 +1,14 @@
-import React, { useState, useRef, useLayoutEffect, useCallback } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 import { media } from 'styles'
 import { MOCK_NAVIGATION_HEIGHT } from 'consts'
+import ScrollToSticky from 'components/ScrollToSticky'
 
-const StyledTextInputHeader = styled.div`
-  position: relative;
+const StyledScrollToSticky = styled(ScrollToSticky)`
   width: 100%;
 `
 
-const Wrapper = styled.div`
+const SearchBg = styled.div`
   box-sizing: border-box;
   width: 100%;
   padding: 30px;
@@ -39,49 +39,22 @@ const StyledTextInput = styled.input`
 
 const SearchInputHeader = ({ className, onSearch }) => {
   const [inputValue, setInputValue] = useState('')
-  const relativeRef = useRef()
-  const stickyRef = useRef()
-
-  const handleScroll = useCallback(
-    () => {
-      const { top } = relativeRef.current.getBoundingClientRect()
-      if (top < MOCK_NAVIGATION_HEIGHT) {
-        stickyRef.current.style.position = 'fixed'
-        stickyRef.current.style.top = `${MOCK_NAVIGATION_HEIGHT}px`
-      } else {
-        stickyRef.current.style.position = 'static'
-      }
-    },
-    [relativeRef, stickyRef]
-  )
-
-  useLayoutEffect(
-    () => {
-      window.addEventListener('scroll', handleScroll)
-      return () => {
-        window.removeEventListener('scroll', handleScroll)
-      }
-    },
-    [handleScroll]
-  )
 
   return (
-    <StyledTextInputHeader className={className} ref={relativeRef}>
-      <Wrapper ref={stickyRef}>
-        <form
-          onSubmit={e => {
-            e.preventDefault()
-            onSearch(inputValue)
-          }}
-        >
-          <StyledTextInput
-            type="text"
-            placeholder="Search FAQ"
-            onChange={e => setInputValue(e.target.value)}
-          />
-        </form>
-      </Wrapper>
-    </StyledTextInputHeader>
+    <StyledScrollToSticky stickY={MOCK_NAVIGATION_HEIGHT} className={className}>
+      <SearchBg
+        onSubmit={e => {
+          e.preventDefault()
+          onSearch(inputValue)
+        }}
+      >
+        <StyledTextInput
+          type="text"
+          placeholder="Search FAQ"
+          onChange={e => setInputValue(e.target.value)}
+        />
+      </SearchBg>
+    </StyledScrollToSticky>
   )
 }
 

@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components/macro'
+import ScrollToSticky from 'components/ScrollToSticky'
+import { MOCK_NAVIGATION_HEIGHT, SEARCH_HEIGHT } from 'consts'
 
 const Container = styled.div`
   width: 100%;
@@ -7,7 +9,6 @@ const Container = styled.div`
 `
 
 const StyledSideNav = styled.div`
-  position: fixed;
   display: flex;
   flex-direction: column;
 `
@@ -42,17 +43,22 @@ const Contact = styled.div`
 
 const SideNav = ({ className }) => {
   return (
-    <Container className={className}>
-      <StyledSideNav>
-        <NavLink active>About SafetyWing and Remote Health</NavLink>
-        <NavLink active={false}>Insurance coverage</NavLink>
-        <NavLink active={false}>Signing up and pricing</NavLink>
-        <NavLink active={false}>Getting treatment and making claims</NavLink>
-        <Contact>
-          Can't find what you're looking for? <a href="/">Contact us</a>
-        </Contact>
-      </StyledSideNav>
-    </Container>
+    <ScrollToSticky
+      stickY={MOCK_NAVIGATION_HEIGHT + SEARCH_HEIGHT}
+      className={className}
+    >
+      <Container>
+        <StyledSideNav>
+          <NavLink active>About SafetyWing and Remote Health</NavLink>
+          <NavLink active={false}>Insurance coverage</NavLink>
+          <NavLink active={false}>Signing up and pricing</NavLink>
+          <NavLink active={false}>Getting treatment and making claims</NavLink>
+          <Contact>
+            Can't find what you're looking for? <a href="/">Contact us</a>
+          </Contact>
+        </StyledSideNav>
+      </Container>
+    </ScrollToSticky>
   )
 }
 
