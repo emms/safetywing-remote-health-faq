@@ -39,20 +39,20 @@ const StyledTextInput = styled.input`
 
 const SearchInputHeader = ({ className, onSearch }) => {
   const [inputValue, setInputValue] = useState('')
-  const elementRef = useRef()
-  const wrapperRef = useRef()
+  const relativeRef = useRef()
+  const stickyRef = useRef()
 
   const handleScroll = useCallback(
     () => {
-      const { top } = elementRef.current.getBoundingClientRect()
+      const { top } = relativeRef.current.getBoundingClientRect()
       if (top < MOCK_NAVIGATION_HEIGHT) {
-        wrapperRef.current.style.position = 'fixed'
-        wrapperRef.current.style.top = `${MOCK_NAVIGATION_HEIGHT}px`
+        stickyRef.current.style.position = 'fixed'
+        stickyRef.current.style.top = `${MOCK_NAVIGATION_HEIGHT}px`
       } else {
-        wrapperRef.current.style.position = 'static'
+        stickyRef.current.style.position = 'static'
       }
     },
-    [wrapperRef]
+    [relativeRef, stickyRef]
   )
 
   useLayoutEffect(
@@ -66,8 +66,8 @@ const SearchInputHeader = ({ className, onSearch }) => {
   )
 
   return (
-    <StyledTextInputHeader className={className} ref={elementRef}>
-      <Wrapper ref={wrapperRef}>
+    <StyledTextInputHeader className={className} ref={relativeRef}>
+      <Wrapper ref={stickyRef}>
         <form
           onSubmit={e => {
             e.preventDefault()
