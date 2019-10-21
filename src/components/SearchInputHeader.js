@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 import { media } from 'styles'
 import { MOCK_NAVIGATION_HEIGHT } from 'consts'
-import ScrollToSticky from 'components/ScrollToSticky'
+import StickToScroll from 'components/StickToScroll'
 
-const StyledScrollToSticky = styled(ScrollToSticky)`
+const StyledStickToScroll = styled(StickToScroll)`
   width: 100%;
 `
 
@@ -41,7 +41,7 @@ const SearchInputHeader = ({ className, onSearch }) => {
   const [inputValue, setInputValue] = useState('')
 
   return (
-    <StyledScrollToSticky stickY={MOCK_NAVIGATION_HEIGHT} className={className}>
+    <StyledStickToScroll stickY={MOCK_NAVIGATION_HEIGHT} className={className}>
       <SearchBg
         onSubmit={e => {
           e.preventDefault()
@@ -54,7 +54,7 @@ const SearchInputHeader = ({ className, onSearch }) => {
           onChange={e => setInputValue(e.target.value)}
         />
       </SearchBg>
-    </StyledScrollToSticky>
+    </StyledStickToScroll>
   )
 }
 

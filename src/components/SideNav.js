@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import ScrollToSticky from 'components/ScrollToSticky'
+import StickToScroll from 'components/StickToScroll'
 import { MOCK_NAVIGATION_HEIGHT, SEARCH_HEIGHT } from 'consts'
 
 const Container = styled.div`
@@ -43,7 +43,7 @@ const Contact = styled.div`
 
 const SideNav = ({ className }) => {
   return (
-    <ScrollToSticky
+    <StickToScroll
       stickY={MOCK_NAVIGATION_HEIGHT + SEARCH_HEIGHT}
       className={className}
     >
@@ -58,7 +58,7 @@ const SideNav = ({ className }) => {
           </Contact>
         </StyledSideNav>
       </Container>
-    </ScrollToSticky>
+    </StickToScroll>
   )
 }
 

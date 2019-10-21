@@ -7,7 +7,7 @@ const Sticky = styled.div`
   z-index: 2;
 `
 
-const ScrollToSticky = ({ children, stickY, className }) => {
+const StickToScroll = ({ children, stickY, className }) => {
   const ref = useRef()
   const stickyRef = useRef()
 
@@ -43,4 +43,4 @@ const ScrollToSticky = ({ children, stickY, className }) => {
   )
 }
 
-export default ScrollToSticky
+export default StickToScroll
