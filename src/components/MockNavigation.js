@@ -1,8 +1,9 @@
 import React from 'react'
 import styled from 'styled-components/macro'
+import { MOCK_NAVIGATION_HEIGHT } from 'consts'
 
 const MockNavigation = styled.div`
-  height: 50px;
+  height: ${MOCK_NAVIGATION_HEIGHT}px;
 `
 
 const MockNavigationContent = styled.div`
@@ -12,7 +13,7 @@ const MockNavigationContent = styled.div`
   top: 0;
   left: 0;
   background-color: ${({ theme }) => theme.color.navigation.background};
-  z-index: 1;
+  z-index: 2;
 `
 
 export default () => (

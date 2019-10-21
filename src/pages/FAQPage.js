@@ -11,7 +11,7 @@ import { media } from 'styles'
 const StyledFAQPage = styled.div`
   display: grid;
   grid-template-columns: auto;
-  grid-template-rows: 180px 90px 80px auto;
+  grid-template-rows: 180px 100px 80px auto;
   grid-template-areas:
     'titleheader'
     'searchinputheader'
@@ -19,7 +19,7 @@ const StyledFAQPage = styled.div`
     'content';
 
   ${media.tabletPortraitUp`
-    grid-template-rows: 120px 90px 80px auto;
+    grid-template-rows: 120px 100px 80px auto;
     grid-template-areas:
       'titleheader'
       'searchinputheader'

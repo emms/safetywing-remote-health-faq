@@ -1,0 +1,1 @@
+export const MOCK_NAVIGATION_HEIGHT = 50
