@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import styled from 'styled-components/macro'
 import StickToScroll from 'components/StickToScroll'
-import { MOCK_NAVIGATION_HEIGHT, SEARCH_HEIGHT, CATEGORIES } from 'consts'
+import { MOCK_NAVIGATION_HEIGHT, SEARCH_HEIGHT } from 'consts'
+import { links } from 'links'
 
 const StyledStickToScroll = styled(StickToScroll)`
   height: 100%;
@@ -39,16 +40,6 @@ const NavLink = styled.a`
     margin-top: 30px;
   }
 `
-
-const links = [
-  { id: CATEGORIES.ABOUT, title: 'About SafetyWing and Remote Health' },
-  { id: CATEGORIES.COVERAGE, title: 'Insurance coverage' },
-  { id: CATEGORIES.SIGNUP_AND_PRICING, title: 'Signing up and pricing' },
-  {
-    id: CATEGORIES.TREATMENT_AND_CLAIMS,
-    title: 'Getting treatment and making claims'
-  }
-]
 
 const SideNav = ({ className }) => {
   const [activeIndex, setActiveIndex] = useState(0)
