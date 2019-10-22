@@ -45,7 +45,11 @@ const SideNav = ({ className }) => {
     if (!el) {
       return
     }
-    window.scrollTo({ top: el.offsetTop - 209, behavior: 'smooth' })
+    // scrollOffset is the amount that we need to adjust the scroll position to
+    // take into account the elements with a fixed position and "negative space"
+    // 60px is added to account for padding and 1px subtracted for border
+    const scrollOffset = MOCK_NAVIGATION_HEIGHT + SEARCH_HEIGHT + 60 - 1
+    window.scrollTo({ top: el.offsetTop - scrollOffset, behavior: 'smooth' })
   }
 
   return (
