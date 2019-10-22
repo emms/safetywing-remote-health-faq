@@ -1,7 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
+import StickToScroll from 'components/StickToScroll'
+import usePageNavigation from 'hooks/usePageNavigation'
+import { MOCK_NAVIGATION_HEIGHT, SEARCH_HEIGHT, TAB_NAV_HEIGHT } from 'consts'
+import { links } from 'links'
 
 const StyledTabNav = styled.div`
+  max-height: ${TAB_NAV_HEIGHT}px;
   margin: 0 20px;
   display: flex;
   flex-direction: row;
@@ -11,14 +16,16 @@ const StyledTabNav = styled.div`
   }
 `
 
-const NavLink = styled.h4`
+const NavLink = styled.a`
   margin: 0;
   padding: 18px;
-  border-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
+  cursor: pointer;
   background-color: ${props =>
     props.active
       ? props.theme.color.sideNavActive.background
@@ -27,15 +34,39 @@ const NavLink = styled.h4`
     props.active
       ? props.theme.color.sideNavActive.foreground
       : props.theme.color.sideNav.foreground};
+  font-weight: bold;
+  text-decoration: none;
 `
 
-const TabNav = ({ className }) => (
-  <StyledTabNav className={className}>
-    <NavLink active>About SafetyWing and Remote Health</NavLink>
-    <NavLink active={false}>Insurance coverage</NavLink>
-    <NavLink active={false}>Signing up and pricing</NavLink>
-    <NavLink active={false}>Getting treatment and making claims</NavLink>
-  </StyledTabNav>
-)
+const TabNav = ({ className }) => {
+  // scrollOffset is the amount that we need to adjust the scroll position to
+  // take into account the elements with a fixed position and "negative space"
+  // 60px is added to account for padding and 1px subtracted for border
+  const scrollOffset =
+    MOCK_NAVIGATION_HEIGHT + SEARCH_HEIGHT + TAB_NAV_HEIGHT + 60 - 1
+  const { activeLinkIndex, createClickHandler } = usePageNavigation(
+    links,
+    scrollOffset
+  )
+  return (
+    <StickToScroll
+      topBound={MOCK_NAVIGATION_HEIGHT + SEARCH_HEIGHT - 1}
+      className={className}
+    >
+      <StyledTabNav className={className}>
+        {links.map((link, i) => (
+          <NavLink
+            key={i}
+            href={`#${link.id}`}
+            active={i === activeLinkIndex}
+            onClick={createClickHandler(link.id)}
+          >
+            {link.title}
+          </NavLink>
+        ))}
+      </StyledTabNav>
+    </StickToScroll>
+  )
+}
 
 export default TabNav

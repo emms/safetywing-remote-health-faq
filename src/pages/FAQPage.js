@@ -12,7 +12,7 @@ import { media } from 'styles'
 const StyledFAQPage = styled.div`
   display: grid;
   grid-template-columns: auto;
-  grid-template-rows: 180px 100px 80px auto;
+  grid-template-rows: 180px 100px 60px auto;
   grid-template-areas:
     'titleheader'
     'searchinputheader'

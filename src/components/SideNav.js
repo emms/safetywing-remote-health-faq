@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React from 'react'
 import styled from 'styled-components/macro'
 import StickToScroll from 'components/StickToScroll'
+import usePageNavigation from 'hooks/usePageNavigation'
 import { MOCK_NAVIGATION_HEIGHT, SEARCH_HEIGHT } from 'consts'
 import { links } from 'links'
 
@@ -42,47 +43,13 @@ const NavLink = styled.a`
 `
 
 const SideNav = ({ className }) => {
-  const [activeIndex, setActiveIndex] = useState(0)
-
-  const handleClick = elementId => {
-    const el = document.querySelector(`#${elementId}`)
-    if (!el) {
-      return
-    }
-    // scrollOffset is the amount that we need to adjust the scroll position to
-    // take into account the elements with a fixed position and "negative space"
-    // 60px is added to account for padding and 1px subtracted for border
-    const scrollOffset = MOCK_NAVIGATION_HEIGHT + SEARCH_HEIGHT + 60 - 1
-    window.scrollTo({ top: el.offsetTop - scrollOffset, behavior: 'smooth' })
-  }
-
-  const getElementPositions = useCallback(() => {
-    return links.map(link => {
-      const el = document.querySelector(`#${link.id}`)
-      return el.offsetTop
-    })
-  }, [])
-
-  const handleScroll = useCallback(
-    positions => {
-      const activeCategoryIndex = positions.findIndex(x => x > window.scrollY)
-      if (activeCategoryIndex !== activeIndex) {
-        setActiveIndex(activeCategoryIndex)
-      }
-    },
-    [activeIndex]
-  )
-
-  useEffect(
-    () => {
-      const elPositions = getElementPositions()
-      const scrollHandler = () => handleScroll(elPositions)
-      window.addEventListener('scroll', scrollHandler)
-      return () => {
-        window.removeEventListener('scroll', scrollHandler)
-      }
-    },
-    [handleScroll, getElementPositions]
+  // scrollOffset is the amount that we need to adjust the scroll position to
+  // take into account the elements with a fixed position and "negative space"
+  // 60px is added to account for padding and 1px subtracted for border
+  const scrollOffset = MOCK_NAVIGATION_HEIGHT + SEARCH_HEIGHT + 60 - 1
+  const { activeLinkIndex, createClickHandler } = usePageNavigation(
+    links,
+    scrollOffset
   )
 
   return (
@@ -95,8 +62,9 @@ const SideNav = ({ className }) => {
           {links.map((link, i) => (
             <NavLink
               key={i}
-              active={i === activeIndex}
-              onClick={() => handleClick(link.id)}
+              href={`#${link.id}`}
+              active={i === activeLinkIndex}
+              onClick={createClickHandler(link.id)}
             >
               {link.title}
             </NavLink>

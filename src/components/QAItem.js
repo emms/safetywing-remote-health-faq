@@ -30,6 +30,7 @@ const StyledQAItem = styled.div`
     margin: 0;
     padding-bottom: ${props => (props.showAnswer ? '0' : '60px')};
     user-select: none;
+    cursor: pointer;
   }
 `
 

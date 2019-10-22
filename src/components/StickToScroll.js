@@ -18,7 +18,7 @@ const StickToScroll = ({ children, topBound, className }) => {
         stickyRef.current.style.position = 'fixed'
         stickyRef.current.style.top = `${topBound}px`
       } else {
-        stickyRef.current.style.position = 'static'
+        stickyRef.current.style.position = ''
       }
     },
     [ref, stickyRef, topBound]
@@ -27,6 +27,7 @@ const StickToScroll = ({ children, topBound, className }) => {
   useEffect(
     () => {
       window.addEventListener('scroll', handleScroll)
+      handleScroll()
       return () => {
         window.removeEventListener('scroll', handleScroll)
       }

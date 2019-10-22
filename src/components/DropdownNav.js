@@ -1,16 +1,30 @@
 import React, { useState } from 'react'
 import styled, { css } from 'styled-components'
+import StickToScroll from 'components/StickToScroll'
+import usePageNavigation from 'hooks/usePageNavigation'
+import {
+  MOCK_NAVIGATION_HEIGHT,
+  SEARCH_HEIGHT,
+  DROPDOWN_NAV_HEIGHT
+} from 'consts'
+import { links } from 'links'
 
 const activeStyles = css`
   background-color: ${({ theme }) => theme.color.sideNavActive.background};
   color: ${({ theme }) => theme.color.sideNavActive.foreground};
 `
 
+const StyledStickToScroll = styled(StickToScroll)`
+  width: 100%;
+`
+
 const StyledDropdownNav = styled.div`
   box-sizing: border-box;
   width: 100%;
   padding: 10px;
+  position: relative;
   font-weight: bold;
+  background-color: ${({ theme }) => theme.color.sideNav.background};
   z-index: 1;
 `
 
@@ -47,40 +61,44 @@ const Option = styled.div`
   }
 `
 
-const options = [
-  'About SafetyWing and Remote Health',
-  'Insurance coverage',
-  'Signing up and pricing',
-  'Getting treatment and making claims'
-]
-
 const DropdownNav = ({ className }) => {
   const [isOpen, setIsOpen] = useState(false)
-  const [selectedOption, setSelectedOption] = useState(options[0])
+  const scrollOffset =
+    MOCK_NAVIGATION_HEIGHT + SEARCH_HEIGHT + DROPDOWN_NAV_HEIGHT + 60 - 1
+  const { activeLinkIndex, createClickHandler } = usePageNavigation(
+    links,
+    scrollOffset
+  )
   return (
-    <StyledDropdownNav className={className}>
-      {isOpen ? (
-        <Dropdown>
-          <div>Categories</div>
-          {options.map((option, i) => (
-            <Option
-              key={i}
-              onClick={() => {
-                setSelectedOption(option)
-                setIsOpen(false)
-              }}
-              active={selectedOption === option}
-            >
-              {option}
-            </Option>
-          ))}
-        </Dropdown>
-      ) : (
-        <SelectedItem onClick={() => setIsOpen(true)}>
-          {selectedOption}
-        </SelectedItem>
-      )}
-    </StyledDropdownNav>
+    <StyledStickToScroll
+      topBound={MOCK_NAVIGATION_HEIGHT + SEARCH_HEIGHT - 1}
+      className={className}
+    >
+      <StyledDropdownNav className={className}>
+        {isOpen ? (
+          <Dropdown>
+            <div>Categories</div>
+            {links.map((link, i) => (
+              <Option
+                key={i}
+                href={`#${link.id}`}
+                active={i === activeLinkIndex}
+                onClick={e => {
+                  createClickHandler(link.id)(e)
+                  setIsOpen(false)
+                }}
+              >
+                {link.title}
+              </Option>
+            ))}
+          </Dropdown>
+        ) : (
+          <SelectedItem onClick={() => setIsOpen(true)}>
+            {links[activeLinkIndex].title}
+          </SelectedItem>
+        )}
+      </StyledDropdownNav>
+    </StyledStickToScroll>
   )
 }
 
