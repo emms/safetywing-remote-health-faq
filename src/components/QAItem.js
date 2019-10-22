@@ -40,6 +40,14 @@ const Answer = styled.div`
     padding: 0;
     margin: 0;
   }
+
+  > ul {
+    margin-bottom: 0;
+
+    > li {
+      padding-top: 20px;
+    }
+  }
 `
 
 const QAItem = ({ question, children }) => {

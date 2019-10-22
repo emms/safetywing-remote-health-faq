@@ -3,7 +3,7 @@ import { ThemeProvider } from 'styled-components'
 import { GlobalStyle, theme } from 'styles'
 import FAQPage from 'pages/FAQPage'
 import MockNavigation from 'components/MockNavigation'
-import Footer from 'components/Footer'
+import MockFooter from 'components/MockFooter'
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
         <GlobalStyle />
         <MockNavigation />
         <FAQPage />
-        <Footer />
+        <MockFooter />
       </>
     </ThemeProvider>
   )

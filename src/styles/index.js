@@ -26,7 +26,7 @@ export const theme = {
       background: '#ebebf2',
       foreground: '#273C49'
     },
-    footer: {
+    MockFooter: {
       background: '#273C49',
       foreground: '#FFF'
     },

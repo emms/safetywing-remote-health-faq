@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components/macro'
 import QAItem from 'components/QAItem'
 import { media } from 'styles'
+import { CATEGORIES } from 'consts'
 
 const QuestionsContainer = styled.div`
   box-sizing: border-box;
@@ -15,45 +16,35 @@ const QuestionsContainer = styled.div`
 `
 
 const Category = styled.div`
-  &:not(:last-child) {
+  :not(:last-child) {
     border-bottom: 1px solid ${({ theme }) => theme.color.category.foreground};
   }
 
-  &:not(:first-child) {
-    padding-top: 60px;
+  :not(:last-child) {
+    margin-bottom: 60px;
   }
-`
-
-const List = styled.ul`
-  margin-bottom: 0;
-`
-
-const ListItem = styled.li`
-  padding-top: 20px;
 `
 
 const Questions = ({ className }) => {
   return (
     <QuestionsContainer className={className}>
-      <Category>
+      <Category id={CATEGORIES.ABOUT}>
         <QAItem question="What is the difference between SafetyWing Nomad insurance and SafetyWing Remote Health?" />
         <QAItem question="What is the difference in coverage between Remote Health for Teams and Remote Health for Individuals?">
           <p>
             The insurance product is the same. For teams, some additional perks
             are available, for example:
           </p>
-          <List>
-            <ListItem>
-              There is a discount based on the size of the company
-            </ListItem>
-            <ListItem>
+          <ul>
+            <li>There is a discount based on the size of the company</li>
+            <li>
               If the company is 5+ employees, we disregard any medical history
               of the team members. This means that we will not ask questions
               about pre-existing conditions, and that your employees will be
               covered regardless of any such conditions.
-            </ListItem>
-            <ListItem>The option to add wellness coverage</ListItem>
-          </List>
+            </li>
+            <li>The option to add wellness coverage</li>
+          </ul>
         </QAItem>
         <QAItem question="Why does my coverage have “Now Health” on it and why am I logging into a “Now Health” portal for claims?" />
         <QAItem question="How long can I buy the insurance for?" />
@@ -66,7 +57,7 @@ const Questions = ({ className }) => {
         <QAItem question="What happens with our insurance if something happens to SafetyWing as a company?" />
         <QAItem question="How do you plan to improve the insurance product in the future?" />
       </Category>
-      <Category>
+      <Category id={CATEGORIES.COVERAGE}>
         <QAItem question="Who can buy SafetyWing Remote Health? (Age, country, company minimum limit, etc.)" />
         <QAItem question="Where can I use the insurance? (Hospitals, doctors, etc.)" />
         <QAItem question="Can I add family members (dependants) to my coverage?" />
@@ -82,7 +73,7 @@ const Questions = ({ className }) => {
         <QAItem question="What if my employee has access to free health care through the government. Is the policy still relevant for them?" />
         <QAItem question="What kind of sports are excluded under the plan?" />
       </Category>
-      <Category>
+      <Category id={CATEGORIES.SIGNUP_AND_PRICING}>
         <QAItem question="Could I just buy the insurance directly through your carrier?" />
         <QAItem question="How much does the insurance cost?" />
         <QAItem question="How does the price change as our company grows?" />
@@ -95,7 +86,7 @@ const Questions = ({ className }) => {
         <QAItem question="Does everyone in my company have to be covered, or can I pick and choose?" />
         <QAItem question="What employee information do I need to sign up our company?" />
       </Category>
-      <Category>
+      <Category id={CATEGORIES.TREATMENT_AND_CLAIMS}>
         <QAItem question="How does the claims process work for treatments I’ve already paid for?" />
         <QAItem question="What to do in an emergency?" />
         <QAItem question="How long does the claims process normally take?" />

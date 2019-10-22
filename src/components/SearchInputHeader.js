@@ -41,7 +41,10 @@ const SearchInputHeader = ({ className, onSearch }) => {
   const [inputValue, setInputValue] = useState('')
 
   return (
-    <StyledStickToScroll stickY={MOCK_NAVIGATION_HEIGHT} className={className}>
+    <StyledStickToScroll
+      topBound={MOCK_NAVIGATION_HEIGHT}
+      className={className}
+    >
       <SearchBg
         onSubmit={e => {
           e.preventDefault()

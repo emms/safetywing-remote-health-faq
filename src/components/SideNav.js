@@ -1,7 +1,11 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 import StickToScroll from 'components/StickToScroll'
-import { MOCK_NAVIGATION_HEIGHT, SEARCH_HEIGHT } from 'consts'
+import { MOCK_NAVIGATION_HEIGHT, SEARCH_HEIGHT, CATEGORIES } from 'consts'
+
+const StyledStickToScroll = styled(StickToScroll)`
+  height: 100%;
+`
 
 const Container = styled.div`
   width: 100%;
@@ -13,7 +17,7 @@ const StyledSideNav = styled.div`
   flex-direction: column;
 `
 
-const NavLink = styled.h3`
+const NavLink = styled.a`
   margin: 0;
   padding: 10px 10px 10px 50px;
   border-top-right-radius: 5px;
@@ -26,39 +30,55 @@ const NavLink = styled.h3`
     props.active
       ? props.theme.color.sideNavActive.foreground
       : props.theme.color.sideNav.foreground};
+  font-size: 1.17em;
+  font-weight: bold;
+  text-decoration: none;
 
   &:not(:first-child) {
     margin-top: 30px;
   }
 `
 
-const Contact = styled.div`
-  padding: 80px 0 0 50px;
-
-  > a {
-    text-decoration: none;
-    color: ${({ theme }) => theme.color.link.foreground};
-  }
-`
-
 const SideNav = ({ className }) => {
+  const handleClick = elementId => {
+    const el = document.querySelector(`#${elementId}`)
+    if (!el) {
+      return
+    }
+    window.scrollTo({ top: el.offsetTop - 209, behavior: 'smooth' })
+  }
+
   return (
-    <StickToScroll
-      stickY={MOCK_NAVIGATION_HEIGHT + SEARCH_HEIGHT}
+    <StyledStickToScroll
+      topBound={MOCK_NAVIGATION_HEIGHT + SEARCH_HEIGHT}
       className={className}
     >
       <Container>
         <StyledSideNav>
-          <NavLink active>About SafetyWing and Remote Health</NavLink>
-          <NavLink active={false}>Insurance coverage</NavLink>
-          <NavLink active={false}>Signing up and pricing</NavLink>
-          <NavLink active={false}>Getting treatment and making claims</NavLink>
-          <Contact>
-            Can't find what you're looking for? <a href="/">Contact us</a>
-          </Contact>
+          <NavLink active onClick={() => handleClick(CATEGORIES.ABOUT)}>
+            About SafetyWing and Remote Health
+          </NavLink>
+          <NavLink
+            active={false}
+            onClick={() => handleClick(CATEGORIES.COVERAGE)}
+          >
+            Insurance coverage
+          </NavLink>
+          <NavLink
+            active={false}
+            onClick={() => handleClick(CATEGORIES.SIGNUP_AND_PRICING)}
+          >
+            Signing up and pricing
+          </NavLink>
+          <NavLink
+            active={false}
+            onClick={() => handleClick(CATEGORIES.TREATMENT_AND_CLAIMS)}
+          >
+            Getting treatment and making claims
+          </NavLink>
         </StyledSideNav>
       </Container>
-    </StickToScroll>
+    </StyledStickToScroll>
   )
 }
 

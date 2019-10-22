@@ -7,21 +7,21 @@ const Sticky = styled.div`
   z-index: 2;
 `
 
-const StickToScroll = ({ children, stickY, className }) => {
+const StickToScroll = ({ children, topBound, className }) => {
   const ref = useRef()
   const stickyRef = useRef()
 
   const handleScroll = useCallback(
     () => {
       const { top } = ref.current.getBoundingClientRect()
-      if (top < stickY) {
+      if (top < topBound) {
         stickyRef.current.style.position = 'fixed'
-        stickyRef.current.style.top = `${stickY}px`
+        stickyRef.current.style.top = `${topBound}px`
       } else {
         stickyRef.current.style.position = 'static'
       }
     },
-    [ref, stickyRef, stickY]
+    [ref, stickyRef, topBound]
   )
 
   useLayoutEffect(

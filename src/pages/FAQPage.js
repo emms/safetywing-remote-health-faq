@@ -6,6 +6,7 @@ import SideNav from 'components/SideNav'
 import TabNav from 'components/TabNav'
 import DropdownNav from 'components/DropdownNav'
 import Questions from 'components/Questions'
+import Contact from 'components/Contact'
 import { media } from 'styles'
 
 const StyledFAQPage = styled.div`
@@ -46,6 +47,11 @@ const StyledSearchInputHeader = styled(SearchInputHeader)`
 
 const StyledSideNav = styled(SideNav)`
   grid-area: sidenav;
+  display: none;
+
+  ${media.tabletLandscapeUp`
+    display: flex;
+  `}
 `
 
 const StyledDropdownNav = styled(DropdownNav)`
@@ -82,6 +88,7 @@ const FAQPage = () => {
       <StyledTabNav />
       <StyledDropdownNav />
       <StyledQuestions />
+      {/* <Contact /> */}
     </StyledFAQPage>
   )
 }
