@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import styled from 'styled-components/macro'
 import StickToScroll from 'components/StickToScroll'
 import { MOCK_NAVIGATION_HEIGHT, SEARCH_HEIGHT, CATEGORIES } from 'consts'
@@ -30,6 +30,7 @@ const NavLink = styled.a`
     props.active
       ? props.theme.color.sideNavActive.foreground
       : props.theme.color.sideNav.foreground};
+  cursor: pointer;
   font-size: 1.17em;
   font-weight: bold;
   text-decoration: none;
@@ -39,7 +40,19 @@ const NavLink = styled.a`
   }
 `
 
+const links = [
+  { id: CATEGORIES.ABOUT, title: 'About SafetyWing and Remote Health' },
+  { id: CATEGORIES.COVERAGE, title: 'Insurance coverage' },
+  { id: CATEGORIES.SIGNUP_AND_PRICING, title: 'Signing up and pricing' },
+  {
+    id: CATEGORIES.TREATMENT_AND_CLAIMS,
+    title: 'Getting treatment and making claims'
+  }
+]
+
 const SideNav = ({ className }) => {
+  const [activeIndex, setActiveIndex] = useState(0)
+
   const handleClick = elementId => {
     const el = document.querySelector(`#${elementId}`)
     if (!el) {
@@ -52,6 +65,35 @@ const SideNav = ({ className }) => {
     window.scrollTo({ top: el.offsetTop - scrollOffset, behavior: 'smooth' })
   }
 
+  const getElementPositions = useCallback(() => {
+    return links.map(link => {
+      const el = document.querySelector(`#${link.id}`)
+      return el.offsetTop
+    })
+  }, [])
+
+  const handleScroll = useCallback(
+    positions => {
+      const activeCategoryIndex = positions.findIndex(x => x > window.scrollY)
+      if (activeCategoryIndex !== activeIndex) {
+        setActiveIndex(activeCategoryIndex)
+      }
+    },
+    [activeIndex]
+  )
+
+  useEffect(
+    () => {
+      const elPositions = getElementPositions()
+      const scrollHandler = () => handleScroll(elPositions)
+      window.addEventListener('scroll', scrollHandler)
+      return () => {
+        window.removeEventListener('scroll', scrollHandler)
+      }
+    },
+    [handleScroll, getElementPositions]
+  )
+
   return (
     <StyledStickToScroll
       topBound={MOCK_NAVIGATION_HEIGHT + SEARCH_HEIGHT}
@@ -59,27 +101,15 @@ const SideNav = ({ className }) => {
     >
       <Container>
         <StyledSideNav>
-          <NavLink active onClick={() => handleClick(CATEGORIES.ABOUT)}>
-            About SafetyWing and Remote Health
-          </NavLink>
-          <NavLink
-            active={false}
-            onClick={() => handleClick(CATEGORIES.COVERAGE)}
-          >
-            Insurance coverage
-          </NavLink>
-          <NavLink
-            active={false}
-            onClick={() => handleClick(CATEGORIES.SIGNUP_AND_PRICING)}
-          >
-            Signing up and pricing
-          </NavLink>
-          <NavLink
-            active={false}
-            onClick={() => handleClick(CATEGORIES.TREATMENT_AND_CLAIMS)}
-          >
-            Getting treatment and making claims
-          </NavLink>
+          {links.map((link, i) => (
+            <NavLink
+              key={i}
+              active={i === activeIndex}
+              onClick={() => handleClick(link.id)}
+            >
+              {link.title}
+            </NavLink>
+          ))}
         </StyledSideNav>
       </Container>
     </StyledStickToScroll>

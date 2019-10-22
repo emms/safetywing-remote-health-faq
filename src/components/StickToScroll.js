@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect, useCallback } from 'react'
+import React, { useRef, useEffect, useCallback } from 'react'
 import styled from 'styled-components/macro'
 
 const Wrapper = styled.div``
@@ -24,7 +24,7 @@ const StickToScroll = ({ children, topBound, className }) => {
     [ref, stickyRef, topBound]
   )
 
-  useLayoutEffect(
+  useEffect(
     () => {
       window.addEventListener('scroll', handleScroll)
       return () => {
