@@ -28,6 +28,7 @@ const StyledTextInput = styled.input`
   box-sizing: border-box;
   width: 100%;
   padding: 10px;
+  margin: 0;
   border: none;
   border-bottom: 1px solid ${({ theme }) => theme.color.header.foreground};
   font-size: 16px;

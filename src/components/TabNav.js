@@ -6,7 +6,7 @@ import { MOCK_NAVIGATION_HEIGHT, SEARCH_HEIGHT, TAB_NAV_HEIGHT } from 'consts'
 import { links } from 'links'
 
 const StyledTabNav = styled.div`
-  max-height: ${TAB_NAV_HEIGHT}px;
+  height: ${TAB_NAV_HEIGHT}px;
   margin: 0 20px;
   display: flex;
   flex-direction: row;
@@ -41,9 +41,10 @@ const NavLink = styled.a`
 const TabNav = ({ className }) => {
   // scrollOffset is the amount that we need to adjust the scroll position to
   // take into account the elements with a fixed position and "negative space"
-  // 60px is added to account for padding and 1px subtracted for border
+  // 60px is added to account for padding and 5px subtracted so that the border
+  // is not visible anywhere underneath the rounded corners of the tabs
   const scrollOffset =
-    MOCK_NAVIGATION_HEIGHT + SEARCH_HEIGHT + TAB_NAV_HEIGHT + 60 - 1
+    MOCK_NAVIGATION_HEIGHT + SEARCH_HEIGHT + TAB_NAV_HEIGHT + 60 - 5
   const { activeLinkIndex, createClickHandler } = usePageNavigation(
     links,
     scrollOffset
