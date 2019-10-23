@@ -6,6 +6,7 @@
     "lodash.throttle": "4.1.1",
     "react": "16.10.2",
     "react-dom": "16.10.2",
+    "react-highlight-words": "^0.16.0",
     "smoothscroll-polyfill": "0.4.4",
     "styled-components": "4.4.0"
   },

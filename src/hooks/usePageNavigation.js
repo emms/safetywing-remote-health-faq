@@ -44,7 +44,7 @@ const usePageNavigation = (links, scrollOffset) => {
       const handleResize = () => {
         itemsBottoms = links.map(
           link =>
-            window.scrollY +
+            window.pageYOffset +
             document.querySelector(`#${link.id}`).getBoundingClientRect().bottom
         )
         handleScroll()

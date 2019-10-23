@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components/macro'
+import Highlighter from 'react-highlight-words'
 
 const StyledQAItem = styled.div`
   position: relative;
@@ -51,8 +52,8 @@ const Answer = styled.div`
   }
 `
 
-const QAItem = ({ question, children }) => {
-  const [showAnswer, setShowAnswer] = useState(false)
+const QAItem = ({ question, searchStr, children, isOpen }) => {
+  const [showAnswer, setShowAnswer] = useState(isOpen || false)
 
   const renderAnswer = () => {
     if (children) {
@@ -61,13 +62,17 @@ const QAItem = ({ question, children }) => {
     return (
       <Answer>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
+          <Highlighter
+            searchWords={[searchStr]}
+            textToHighlight="
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+              minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+              aliquip ex ea commodo consequat. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+              pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+              culpa qui officia deserunt mollit anim id est laborum."
+          />
         </p>
       </Answer>
     )
@@ -75,7 +80,13 @@ const QAItem = ({ question, children }) => {
 
   return (
     <StyledQAItem showAnswer={showAnswer}>
-      <h4 onClick={() => setShowAnswer(!showAnswer)}>{question}</h4>
+      <h4 onClick={() => setShowAnswer(!showAnswer)}>
+        <Highlighter
+          searchWords={[searchStr]}
+          caseSensitive={false}
+          textToHighlight={question}
+        />
+      </h4>
       {showAnswer && renderAnswer()}
     </StyledQAItem>
   )

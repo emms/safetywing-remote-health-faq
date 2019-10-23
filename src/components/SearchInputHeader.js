@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components/macro'
 import { media } from 'styles'
 import { MOCK_NAVIGATION_HEIGHT } from 'consts'
@@ -37,24 +37,18 @@ const StyledTextInput = styled.input`
   `}
 `
 
-const SearchInputHeader = ({ className, onSearch }) => {
-  const [inputValue, setInputValue] = useState('')
-
+const SearchInputHeader = ({ className, value, onSearch, searchStr }) => {
   return (
     <StyledStickToScroll
       topBound={MOCK_NAVIGATION_HEIGHT}
       className={className}
     >
-      <SearchBg
-        onSubmit={e => {
-          e.preventDefault()
-          onSearch(inputValue)
-        }}
-      >
+      <SearchBg>
         <StyledTextInput
           type="text"
           placeholder="Search FAQ"
-          onChange={e => setInputValue(e.target.value)}
+          value={searchStr}
+          onChange={e => onSearch(e.target.value)}
         />
       </SearchBg>
     </StyledStickToScroll>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 import TitleHeader from 'components/TitleHeader'
 import SearchInputHeader from 'components/SearchInputHeader'
@@ -8,8 +8,12 @@ import DropdownNav from 'components/DropdownNav'
 import Questions from 'components/Questions'
 import Contact from 'components/Contact'
 import { media } from 'styles'
+import { MOCK_FOOTER_HEIGHT, MOCK_NAVIGATION_HEIGHT } from 'consts'
 
 const StyledFAQPage = styled.div`
+  min-height: calc(
+    100vh - ${MOCK_FOOTER_HEIGHT}px - ${MOCK_NAVIGATION_HEIGHT}px
+  );
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: 180px 100px 60px auto;
@@ -80,14 +84,16 @@ const StyledQuestions = styled(Questions)`
 `
 
 const FAQPage = () => {
+  const [searchStr, setSearchStr] = useState('')
+
   return (
     <StyledFAQPage>
       <StyledTitleHeader title="Frequently asked questions" />
-      <StyledSearchInputHeader onSearch={searchStr => console.log(searchStr)} />
+      <StyledSearchInputHeader onSearch={str => setSearchStr(str)} />
       <StyledSideNav />
       <StyledTabNav />
       <StyledDropdownNav />
-      <StyledQuestions />
+      <StyledQuestions searchStr={searchStr} />
       {/* <Contact /> */}
     </StyledFAQPage>
   )
