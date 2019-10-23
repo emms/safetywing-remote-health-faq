@@ -93,10 +93,7 @@ const CancelIcon = styled.div`
 
 const SearchInputHeader = ({ className, setSearchStr, searchStr }) => {
   return (
-    <StyledStickToScroll
-      topBound={MOCK_NAVIGATION_HEIGHT}
-      className={className}
-    >
+    <StyledStickToScroll bound={MOCK_NAVIGATION_HEIGHT} className={className}>
       <SearchBg>
         <InputContainer>
           <StyledTextInput

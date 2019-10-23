@@ -118,7 +118,7 @@ const DropdownNav = ({ className }) => {
 
   return (
     <StyledStickToScroll
-      topBound={MOCK_NAVIGATION_HEIGHT + SEARCH_HEIGHT - 1}
+      bound={MOCK_NAVIGATION_HEIGHT + SEARCH_HEIGHT - 1}
       className={className}
     >
       <StyledDropdownNav className={className} ref={dropdownRef}>

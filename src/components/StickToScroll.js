@@ -7,21 +7,36 @@ const Sticky = styled.div`
   z-index: 2;
 `
 
-const StickToScroll = ({ children, topBound, className }) => {
+const StickToScroll = ({ children, bound, fromBottom, className }) => {
   const ref = useRef()
   const stickyRef = useRef()
 
   const handleScroll = useCallback(
     () => {
-      const { top } = ref.current.getBoundingClientRect()
-      if (top < topBound) {
-        stickyRef.current.style.position = 'fixed'
-        stickyRef.current.style.top = `${topBound}px`
+      if (fromBottom) {
+        // component sticks to bottom
+        if (
+          document.body.scrollHeight - window.innerHeight - bound >
+          window.pageYOffset
+        ) {
+          stickyRef.current.style.position = 'fixed'
+          stickyRef.current.style.bottom = 0
+        } else {
+          stickyRef.current.style.position = ''
+          stickyRef.current.style.bottom = ''
+        }
       } else {
-        stickyRef.current.style.position = ''
+        // component sticks to top
+        const { top } = ref.current.getBoundingClientRect()
+        if (top < bound) {
+          stickyRef.current.style.position = 'fixed'
+          stickyRef.current.style.top = `${bound}px`
+        } else {
+          stickyRef.current.style.position = ''
+        }
       }
     },
-    [ref, stickyRef, topBound]
+    [ref, stickyRef, bound, fromBottom]
   )
 
   useEffect(

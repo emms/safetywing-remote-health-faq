@@ -2,11 +2,12 @@ import React from 'react'
 import styled from 'styled-components/macro'
 import StickToScroll from 'components/StickToScroll'
 import usePageNavigation from 'hooks/usePageNavigation'
-import { MOCK_NAVIGATION_HEIGHT, SEARCH_HEIGHT } from 'consts'
+import { MOCK_NAVIGATION_HEIGHT, SEARCH_HEIGHT, SIDE_NAV_WIDTH } from 'consts'
 import { links } from 'links'
 
 const StyledStickToScroll = styled(StickToScroll)`
   height: 100%;
+  width: ${SIDE_NAV_WIDTH}px;
 `
 
 const Container = styled.div`
@@ -54,7 +55,7 @@ const SideNav = ({ className }) => {
 
   return (
     <StyledStickToScroll
-      topBound={MOCK_NAVIGATION_HEIGHT + SEARCH_HEIGHT}
+      bound={MOCK_NAVIGATION_HEIGHT + SEARCH_HEIGHT}
       className={className}
     >
       <Container>

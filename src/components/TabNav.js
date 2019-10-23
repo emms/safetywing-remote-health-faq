@@ -50,7 +50,7 @@ const TabNav = ({ className }) => {
   )
   return (
     <StickToScroll
-      topBound={MOCK_NAVIGATION_HEIGHT + SEARCH_HEIGHT - 1}
+      bound={MOCK_NAVIGATION_HEIGHT + SEARCH_HEIGHT - 1}
       className={className}
     >
       <StyledTabNav className={className}>

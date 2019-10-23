@@ -2,6 +2,9 @@ import React from 'react'
 import styled from 'styled-components/macro'
 
 const StyledContact = styled.div`
+  padding: 60px 50px;
+  font-size: 14px;
+
   > a {
     text-decoration: none;
     color: ${({ theme }) => theme.color.link.foreground};

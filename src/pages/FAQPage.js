@@ -7,8 +7,13 @@ import TabNav from 'components/TabNav'
 import DropdownNav from 'components/DropdownNav'
 import Questions from 'components/Questions'
 import Contact from 'components/Contact'
+import StickyContact from 'components/StickyContact'
 import { media } from 'styles'
-import { MOCK_FOOTER_HEIGHT, MOCK_NAVIGATION_HEIGHT } from 'consts'
+import {
+  MOCK_FOOTER_HEIGHT,
+  MOCK_NAVIGATION_HEIGHT,
+  SIDE_NAV_WIDTH
+} from 'consts'
 
 const StyledFAQPage = styled.div`
   min-height: calc(
@@ -16,29 +21,32 @@ const StyledFAQPage = styled.div`
   );
   display: grid;
   grid-template-columns: auto;
-  grid-template-rows: 180px 100px 60px auto;
+  grid-template-rows: 180px 100px 60px auto auto;
   grid-template-areas:
     'titleheader'
     'searchinputheader'
     'dropdownnav'
-    'content';
+    'content'
+    'contact';
 
   ${media.tabletPortraitUp`
-    grid-template-rows: 120px 100px 80px auto;
+    grid-template-rows: 120px 100px 80px auto auto;
     grid-template-areas:
       'titleheader'
       'searchinputheader'
       'tabnav'
-      'content';
+      'content'
+      'contact';
     `}
 
   ${media.tabletLandscapeUp`
-    grid-template-columns: 400px 1fr;
-    grid-template-rows: 100px 100px 1fr;
+    grid-template-columns: ${SIDE_NAV_WIDTH}px 1fr;
+    grid-template-rows: 100px 100px 1fr auto;
     grid-template-areas:
-      'titleheader titleheader'
-      'searchinputheader searchinputheader'
-      'sidenav content';
+        'titleheader titleheader'
+        'searchinputheader searchinputheader'
+        'sidenav content'
+        'stickycontact content';
     `}
 `
 
@@ -96,17 +104,19 @@ const StyledSearchingIndicator = styled.div`
 `
 
 const StyledContact = styled(Contact)`
-  padding: 30px;
-
-  ${media.tabletPortraitUp`
-    padding: 50px;
-  `}
+  grid-area: contact;
 
   ${media.tabletLandscapeUp`
-    padding: 0;
-    position: fixed;
-    bottom: 50px;
-    left: 50px;
+    display: none;
+  `}
+`
+
+const StyledStickyContact = styled(StickyContact)`
+  grid-area: stickycontact;
+  display: none;
+
+  ${media.tabletLandscapeUp`
+    display: block;
   `}
 `
 
@@ -128,11 +138,12 @@ const FAQPage = () => {
         </>
       ) : (
         <StyledSearchingIndicator>
-          <h3>{`Search results for ${searchStr}`}</h3>
+          <h3>{`Search results for "${searchStr}"`}</h3>
         </StyledSearchingIndicator>
       )}
       <StyledQuestions searchStr={searchStr} />
       <StyledContact />
+      <StyledStickyContact />
     </StyledFAQPage>
   )
 }
