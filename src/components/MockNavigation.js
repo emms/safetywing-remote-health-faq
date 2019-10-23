@@ -7,7 +7,7 @@ const MockNavigation = styled.div`
 `
 
 const MockNavigationContent = styled.div`
-  height: 50px;
+  height: ${MOCK_NAVIGATION_HEIGHT}px;
   width: 100%;
   position: fixed;
   top: 0;

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 import { media } from 'styles'
-import { MOCK_NAVIGATION_HEIGHT } from 'consts'
+import { MOCK_NAVIGATION_HEIGHT, SEARCH_HEIGHT } from 'consts'
 import StickToScroll from 'components/StickToScroll'
 
 const StyledStickToScroll = styled(StickToScroll)`
@@ -11,7 +11,10 @@ const StyledStickToScroll = styled(StickToScroll)`
 const SearchBg = styled.div`
   box-sizing: border-box;
   width: 100%;
-  padding: 30px;
+  height: ${SEARCH_HEIGHT}px;
+  padding-left: 30px;
+  display: flex;
+  align-items: center;
   background-color: ${({ theme }) => theme.color.header.background};
   z-index: 2;
 `
@@ -30,6 +33,7 @@ const StyledTextInput = styled.input`
   padding: 10px;
   margin: 0;
   border: none;
+  border-radius: 0;
   border-bottom: 1px solid ${({ theme }) => theme.color.header.foreground};
   font-size: 16px;
   color: ${({ theme }) => theme.color.header.foreground};

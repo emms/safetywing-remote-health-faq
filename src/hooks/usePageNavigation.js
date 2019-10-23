@@ -39,7 +39,7 @@ const usePageNavigation = (links, scrollOffset) => {
           }
           setActiveIndex(activeCategoryIndex)
         }
-      }, 100)
+      }, 50)
 
       const handleResize = () => {
         itemsBottoms = links.map(
