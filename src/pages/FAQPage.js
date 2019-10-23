@@ -83,6 +83,18 @@ const StyledQuestions = styled(Questions)`
   grid-area: content;
 `
 
+const StyledSearchingIndicator = styled.div`
+  padding: 30px;
+
+  > h3 {
+    margin: 0;
+  }
+
+  ${media.tabletPortraitUp`
+    padding: 50px;
+  `}
+`
+
 const FAQPage = () => {
   const [searchStr, setSearchStr] = useState('')
 
@@ -90,9 +102,17 @@ const FAQPage = () => {
     <StyledFAQPage>
       <StyledTitleHeader title="Frequently asked questions" />
       <StyledSearchInputHeader onSearch={str => setSearchStr(str)} />
-      <StyledSideNav />
-      <StyledTabNav />
-      <StyledDropdownNav />
+      { searchStr.length <= 0 ? (
+        <>
+        <StyledSideNav />
+        <StyledTabNav />
+        <StyledDropdownNav />
+        </>
+      )
+      : <StyledSearchingIndicator>
+        <h3>{`Search results for ${searchStr}`}</h3>
+        </StyledSearchingIndicator>
+    }
       <StyledQuestions searchStr={searchStr} />
       {/* <Contact /> */}
     </StyledFAQPage>

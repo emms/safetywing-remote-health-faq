@@ -26,6 +26,10 @@ const Category = styled.div`
   }
 `
 
+const NoResults = styled.h3`
+  margin: 0;
+`
+
 const Questions = ({ className, searchStr }) => {
   const placeholderAnswerEl = (
     <p>
@@ -278,7 +282,7 @@ const Questions = ({ className, searchStr }) => {
             </QAItem>
           ))
         ) : (
-          <h3>No Results found</h3>
+          <NoResults>No Results found</NoResults>
         )}
       </QuestionsContainer>
     )
