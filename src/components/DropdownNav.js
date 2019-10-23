@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 import StickToScroll from 'components/StickToScroll'
 import usePageNavigation from 'hooks/usePageNavigation'
@@ -33,7 +33,21 @@ const SelectedItem = styled.div`
   border: 1px solid;
   border-radius: 7px;
   border-color: ${({ theme }) => theme.color.sideNavActive.foreground};
+  position: relative;
   ${activeStyles};
+  cursor: pointer;
+
+  ::before {
+    content: ' ';
+    position: absolute;
+    top: 14px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-top: 7px solid ${({ theme }) => theme.color.primary.foreground};
+  }
 `
 
 const Dropdown = styled.div`
@@ -53,6 +67,7 @@ const Option = styled.div`
   border-top: ${props => (props.active ? '1px solid' : 'none')};
   border-bottom: ${props => (props.active ? '1px solid' : 'none')};
   border-color: ${({ theme }) => theme.color.sideNavActive.foreground};
+  cursor: pointer;
 
   &:last-child {
     border-bottom-right-radius: 7px;
@@ -61,23 +76,57 @@ const Option = styled.div`
   }
 `
 
+const DropdownTitle = styled.div`
+  position: relative;
+
+  ::before {
+    content: ' ';
+    position: absolute;
+    top: 14px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 7px solid ${({ theme }) => theme.color.primary.foreground};
+  }
+`
+
 const DropdownNav = ({ className }) => {
   const [isOpen, setIsOpen] = useState(false)
+  const dropdownRef = useRef()
+
+  const handleClick = e => {
+    // close dropdown if user clicks outside of it
+    if (dropdownRef.current.contains(e.target)) return
+    setIsOpen(false)
+  }
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClick)
+    return () => {
+      document.removeEventListener('mousedown', handleClick)
+    }
+  }, [])
+
   const scrollOffset =
     MOCK_NAVIGATION_HEIGHT + SEARCH_HEIGHT + DROPDOWN_NAV_HEIGHT + 60 - 1
   const { activeLinkIndex, createClickHandler } = usePageNavigation(
     links,
     scrollOffset
   )
+
   return (
     <StyledStickToScroll
       topBound={MOCK_NAVIGATION_HEIGHT + SEARCH_HEIGHT - 1}
       className={className}
     >
-      <StyledDropdownNav className={className}>
+      <StyledDropdownNav className={className} ref={dropdownRef}>
         {isOpen ? (
           <Dropdown>
-            <div>Categories</div>
+            <DropdownTitle onClick={() => setIsOpen(false)}>
+              Categories
+            </DropdownTitle>
             {links.map((link, i) => (
               <Option
                 key={i}
