@@ -95,26 +95,44 @@ const StyledSearchingIndicator = styled.div`
   `}
 `
 
+const StyledContact = styled(Contact)`
+  padding: 30px;
+
+  ${media.tabletPortraitUp`
+    padding: 50px;
+  `}
+
+  ${media.tabletLandscapeUp`
+    padding: 0;
+    position: fixed;
+    bottom: 50px;
+    left: 50px;
+  `}
+`
+
 const FAQPage = () => {
   const [searchStr, setSearchStr] = useState('')
 
   return (
     <StyledFAQPage>
       <StyledTitleHeader title="Frequently asked questions" />
-      <StyledSearchInputHeader onSearch={str => setSearchStr(str)} />
-      { searchStr.length <= 0 ? (
+      <StyledSearchInputHeader
+        setSearchStr={setSearchStr}
+        searchStr={searchStr}
+      />
+      {searchStr.length <= 0 ? (
         <>
-        <StyledSideNav />
-        <StyledTabNav />
-        <StyledDropdownNav />
+          <StyledSideNav />
+          <StyledTabNav />
+          <StyledDropdownNav />
         </>
-      )
-      : <StyledSearchingIndicator>
-        <h3>{`Search results for ${searchStr}`}</h3>
+      ) : (
+        <StyledSearchingIndicator>
+          <h3>{`Search results for ${searchStr}`}</h3>
         </StyledSearchingIndicator>
-    }
+      )}
       <StyledQuestions searchStr={searchStr} />
-      {/* <Contact /> */}
+      <StyledContact />
     </StyledFAQPage>
   )
 }

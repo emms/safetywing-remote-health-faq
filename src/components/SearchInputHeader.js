@@ -16,7 +16,17 @@ const SearchBg = styled.div`
   z-index: 2;
 `
 
+const InputContainer = styled.div`
+  position: relative;
+
+  ${media.tabletPortraitUp`
+    width: 350px;
+  `}
+`
+
 const StyledTextInput = styled.input`
+  box-sizing: border-box;
+  width: 100%;
   padding: 10px;
   border: none;
   border-bottom: 1px solid ${({ theme }) => theme.color.header.foreground};
@@ -28,28 +38,84 @@ const StyledTextInput = styled.input`
     color: #bebebe;
   }
 
-  &:focus {
+  :focus {
     outline: none;
   }
-
-  ${media.tabletPortraitUp`
-    width: 350px;
-  `}
 `
 
-const SearchInputHeader = ({ className, value, onSearch, searchStr }) => {
+const IconContainer = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+`
+
+const SearchIcon = styled.div`
+  width: 10px;
+  height: 10px;
+  border: 2px solid ${({ theme }) => theme.color.header.foreground};
+  position: relative;
+  border-radius: 10px;
+
+  ::before {
+    content: '';
+    width: 8px;
+    height: 2px;
+    position: absolute;
+    right: -5px;
+    bottom: -3px;
+    background-color: ${({ theme }) => theme.color.header.foreground};
+    transform: rotate(45deg);
+  }
+`
+
+const CancelIcon = styled.div`
+  width: 10px;
+  height: 10px;
+  position: relative;
+  cursor: pointer;
+
+  > * {
+    width: 2px;
+    height: 10px;
+    position: absolute;
+    top: 5px;
+    background-color: ${({ theme }) => theme.color.header.foreground};
+  }
+
+  > :first-child {
+    transform: rotate(45deg);
+  }
+
+  > :last-child {
+    transform: rotate(-45deg);
+  }
+`
+
+const SearchInputHeader = ({ className, setSearchStr, searchStr }) => {
   return (
     <StyledStickToScroll
       topBound={MOCK_NAVIGATION_HEIGHT}
       className={className}
     >
       <SearchBg>
-        <StyledTextInput
-          type="text"
-          placeholder="Search FAQ"
-          value={searchStr}
-          onChange={e => onSearch(e.target.value)}
-        />
+        <InputContainer>
+          <StyledTextInput
+            type="text"
+            placeholder="Search FAQ"
+            value={searchStr}
+            onChange={e => setSearchStr(e.target.value)}
+          />
+          <IconContainer>
+            {searchStr.length > 0 ? (
+              <CancelIcon onClick={() => setSearchStr('')}>
+                <div />
+                <div />
+              </CancelIcon>
+            ) : (
+              <SearchIcon />
+            )}
+          </IconContainer>
+        </InputContainer>
       </SearchBg>
     </StyledStickToScroll>
   )
