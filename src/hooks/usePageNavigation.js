@@ -1,11 +1,10 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import throttle from 'lodash.throttle'
 
 const usePageNavigation = (links, scrollOffset) => {
-  const [activeLinkIndex, setActiveIndex] = useState(0)
-  const [doNotHandleScroll, setDoNotHandleScroll] = useState(false)
-  const isMounted = useRef(false)
-  const timeoutRef = useRef()
+  const [activeLinkIndex, setActiveLinkIndex] = useState(0)
+  const [overrideIndex, setOverrideIndex] = useState(0)
+  const [useOverrideIndex, setUseOverrideIndex] = useState(false)
 
   const createClickHandler = elementId => e => {
     e.preventDefault()
@@ -13,33 +12,26 @@ const usePageNavigation = (links, scrollOffset) => {
     if (!el) {
       return
     }
-    setDoNotHandleScroll(true)
-    setActiveIndex(links.findIndex(x => x.id === elementId))
+    const indexOfClickedItem = links.findIndex(x => x.id === elementId)
+    setOverrideIndex(indexOfClickedItem)
+    setUseOverrideIndex(true)
     window.scrollTo({ top: el.offsetTop - scrollOffset, behavior: 'smooth' })
-    clearTimeout(timeoutRef.current)
-    timeoutRef.current = setTimeout(() => {
-      if (isMounted.current) {
-        setDoNotHandleScroll(false)
-      }
-    }, 1000)
   }
 
   useEffect(
     () => {
-      isMounted.current = true
       let itemsBottoms = []
 
       const handleScroll = throttle(() => {
-        if (!doNotHandleScroll) {
-          let activeCategoryIndex = itemsBottoms.findIndex(
-            bottom => bottom - window.pageYOffset > window.innerHeight / 2
-          )
-          if (activeCategoryIndex === -1) {
-            activeCategoryIndex = links.length - 1
-          }
-          setActiveIndex(activeCategoryIndex)
+        // finds the first item the bottom of which is lower than the scrollOffset
+        let activeCategoryIndex = itemsBottoms.findIndex(
+          bottom => bottom - window.pageYOffset > scrollOffset
+        )
+        if (activeCategoryIndex === -1) {
+          activeCategoryIndex = links.length - 1
         }
-      }, 50)
+        setActiveLinkIndex(activeCategoryIndex)
+      }, 100)
 
       const handleResize = () => {
         itemsBottoms = links.map(
@@ -56,13 +48,24 @@ const usePageNavigation = (links, scrollOffset) => {
       return () => {
         window.removeEventListener('scroll', handleScroll)
         window.removeEventListener('resize', handleResize)
-        isMounted.current = false
       }
     },
-    [doNotHandleScroll, links]
+    [links, scrollOffset]
   )
 
-  return { activeLinkIndex, createClickHandler }
+  useEffect(
+    () => {
+      if (activeLinkIndex === overrideIndex) {
+        setUseOverrideIndex(false)
+      }
+    },
+    [overrideIndex, activeLinkIndex]
+  )
+
+  return {
+    activeLinkIndex: useOverrideIndex ? overrideIndex : activeLinkIndex,
+    createClickHandler
+  }
 }
 
 export default usePageNavigation
