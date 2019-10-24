@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import throttle from 'lodash.throttle'
 
-const usePageNavigation = (links, scrollOffset) => {
+const usePageNavigation = (categories, scrollOffset) => {
   const [activeLinkIndex, setActiveLinkIndex] = useState(0)
   const [overrideIndex, setOverrideIndex] = useState(0)
   const [useOverrideIndex, setUseOverrideIndex] = useState(false)
@@ -12,7 +12,7 @@ const usePageNavigation = (links, scrollOffset) => {
     if (!el) {
       return
     }
-    const indexOfClickedItem = links.findIndex(x => x.id === elementId)
+    const indexOfClickedItem = categories.findIndex(x => x.id === elementId)
     setOverrideIndex(indexOfClickedItem)
     setUseOverrideIndex(true)
     window.scrollTo({ top: el.offsetTop - scrollOffset, behavior: 'smooth' })
@@ -28,13 +28,13 @@ const usePageNavigation = (links, scrollOffset) => {
           bottom => bottom - window.pageYOffset > scrollOffset
         )
         if (activeCategoryIndex === -1) {
-          activeCategoryIndex = links.length - 1
+          activeCategoryIndex = categories.length - 1
         }
         setActiveLinkIndex(activeCategoryIndex)
       }, 100)
 
       const handleResize = () => {
-        itemsBottoms = links.map(
+        itemsBottoms = categories.map(
           link =>
             window.pageYOffset +
             document.querySelector(`#${link.id}`).getBoundingClientRect().bottom
@@ -50,7 +50,7 @@ const usePageNavigation = (links, scrollOffset) => {
         window.removeEventListener('resize', handleResize)
       }
     },
-    [links, scrollOffset]
+    [categories, scrollOffset]
   )
 
   useEffect(

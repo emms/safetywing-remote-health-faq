@@ -1,10 +1,27 @@
-import React, { useState } from 'react'
-import styled from 'styled-components/macro'
-import Highlighter from 'react-highlight-words'
+import React, { useState, useRef, useLayoutEffect } from 'react'
+import styled, { keyframes } from 'styled-components/macro'
+import ReactMarkdown from 'react-markdown'
+import { uniq } from 'ramda'
 
 const StyledQAItem = styled.div`
   position: relative;
   padding-left: 30px;
+
+  .highlight {
+    display: inline-block;
+    position: relative;
+
+    ::before {
+      content: ' ';
+      position: absolute;
+      top: 0;
+      left: -2px;
+      right: -2px;
+      bottom: 0;
+      background-color: #c7c7ff;
+      z-index: -1;
+    }
+  }
 
   ::before {
     content: ' ';
@@ -23,7 +40,7 @@ const StyledQAItem = styled.div`
           ? props.theme.color.primary.background
           : props.theme.color.primary.foreground};
     position: absolute;
-    top: ${props => (props.showAnswer ? '-2px' : '5px')};
+    top: ${props => (props.showAnswer ? 0 : '10px')};
     left: 0;
   }
 
@@ -32,11 +49,24 @@ const StyledQAItem = styled.div`
     padding-bottom: ${props => (props.showAnswer ? '0' : '60px')};
     user-select: none;
     cursor: pointer;
+    font-size: 18px;
+    line-height: 1.6;
   }
 `
 
 const Answer = styled.div`
   padding: 30px 0 40px 0;
+  line-height: 1.6;
+  animation-name: ${keyframes`
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  `};
+  animation-duration: 200ms;
+  animation-timing-function: ease-in-out;
 
   > :first-child {
     padding: 0;
@@ -52,42 +82,46 @@ const Answer = styled.div`
   }
 `
 
-const QAItem = ({ question, searchStr, children, isOpen }) => {
+const QAItem = ({ question, searchStr, answer, isOpen }) => {
   const [showAnswer, setShowAnswer] = useState(isOpen || false)
+  const ref = useRef()
 
-  const renderAnswer = () => {
-    if (children) {
-      return <Answer>{children}</Answer>
-    }
-    return (
-      <Answer>
-        <p>
-          <Highlighter
-            searchWords={[searchStr]}
-            textToHighlight="
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-              minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-              aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-              pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-              culpa qui officia deserunt mollit anim id est laborum."
-          />
-        </p>
-      </Answer>
-    )
-  }
+  useLayoutEffect(
+    () => {
+      const highlightSearchStr = el => {
+        if (!el) {
+          return
+        }
+        ;[...el.children].forEach(highlightSearchStr)
+
+        if (!el.children.length) {
+          const matches = uniq(
+            el.innerHTML.match(new RegExp(searchStr, 'ig')) || []
+          )
+          const nextInnerHTML = matches.reduce((acc, match) => {
+            return acc.replace(new RegExp(match, 'g'), `<!--${match}-->`)
+          }, el.innerHTML)
+          el.innerHTML = nextInnerHTML
+            .replace(/<!--/g, '<span class="highlight">')
+            .replace(/-->/g, '</span>')
+        }
+      }
+
+      if (searchStr) {
+        highlightSearchStr(ref.current)
+      }
+    },
+    [searchStr, showAnswer]
+  )
 
   return (
-    <StyledQAItem showAnswer={showAnswer}>
-      <h4 onClick={() => setShowAnswer(!showAnswer)}>
-        <Highlighter
-          searchWords={[searchStr]}
-          caseSensitive={false}
-          textToHighlight={question}
-        />
-      </h4>
-      {showAnswer && renderAnswer()}
+    <StyledQAItem showAnswer={showAnswer} ref={ref} key={searchStr}>
+      <h4 onClick={() => setShowAnswer(!showAnswer)}>{question}</h4>
+      {showAnswer && (
+        <Answer>
+          <ReactMarkdown>{answer}</ReactMarkdown>
+        </Answer>
+      )}
     </StyledQAItem>
   )
 }

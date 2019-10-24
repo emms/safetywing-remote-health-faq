@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import StickToScroll from 'components/StickToScroll'
 import usePageNavigation from 'hooks/usePageNavigation'
 import { MOCK_NAVIGATION_HEIGHT, SEARCH_HEIGHT, TAB_NAV_HEIGHT } from 'consts'
-import { links } from 'links'
+import { categories } from 'content'
 
 const StyledTabNav = styled.div`
   height: ${TAB_NAV_HEIGHT}px;
@@ -46,7 +46,7 @@ const TabNav = ({ className }) => {
   const scrollOffset =
     MOCK_NAVIGATION_HEIGHT + SEARCH_HEIGHT + TAB_NAV_HEIGHT + 60 - 5
   const { activeLinkIndex, createClickHandler } = usePageNavigation(
-    links,
+    categories,
     scrollOffset
   )
   return (
@@ -55,7 +55,7 @@ const TabNav = ({ className }) => {
       className={className}
     >
       <StyledTabNav className={className}>
-        {links.map((link, i) => (
+        {categories.map((link, i) => (
           <NavLink
             key={i}
             href={`#${link.id}`}

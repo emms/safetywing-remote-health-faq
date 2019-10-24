@@ -12,7 +12,7 @@ const SearchBg = styled.div`
   box-sizing: border-box;
   width: 100%;
   height: ${SEARCH_HEIGHT}px;
-  padding-left: 30px;
+  padding: 0 30px;
   display: flex;
   align-items: center;
   background-color: ${({ theme }) => theme.color.header.background};
@@ -20,10 +20,12 @@ const SearchBg = styled.div`
 `
 
 const InputContainer = styled.div`
+  box-sizing: border-box;
+  width: 100%;
   position: relative;
 
   ${media.tabletPortraitUp`
-    width: 350px;
+    width: 550px;
   `}
 `
 

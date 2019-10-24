@@ -3,7 +3,7 @@ import styled from 'styled-components/macro'
 import StickToScroll from 'components/StickToScroll'
 import usePageNavigation from 'hooks/usePageNavigation'
 import { MOCK_NAVIGATION_HEIGHT, SEARCH_HEIGHT, SIDE_NAV_WIDTH } from 'consts'
-import { links } from 'links'
+import { categories } from 'content'
 
 const StyledStickToScroll = styled(StickToScroll)`
   height: 100%;
@@ -22,7 +22,8 @@ const StyledSideNav = styled.div`
 
 const NavLink = styled.a`
   margin: 0;
-  padding: 10px 10px 10px 50px;
+  padding: 15px;
+  padding-left: 50px;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   background-color: ${props =>
@@ -38,8 +39,8 @@ const NavLink = styled.a`
   font-weight: bold;
   text-decoration: none;
 
-  &:not(:first-child) {
-    margin-top: 30px;
+  :not(:first-child) {
+    margin-top: 10px;
   }
 `
 
@@ -49,7 +50,7 @@ const SideNav = ({ className }) => {
   // 60px is added to account for padding and 1px subtracted for border
   const scrollOffset = MOCK_NAVIGATION_HEIGHT + SEARCH_HEIGHT + 60 - 1
   const { activeLinkIndex, createClickHandler } = usePageNavigation(
-    links,
+    categories,
     scrollOffset
   )
 
@@ -60,7 +61,7 @@ const SideNav = ({ className }) => {
     >
       <Container>
         <StyledSideNav>
-          {links.map((link, i) => (
+          {categories.map((link, i) => (
             <NavLink
               key={i}
               href={`#${link.id}`}
