@@ -37,4 +37,10 @@ When the user clicks a link, the active category changes immediately to the clic
 
 The colour theme in this project has a philosophy of containing components or items, each of which has a foreground and a background colour. This is not a perfect solution as it probably does not cover all cases (sometimes a color can not be assigned as the foreground or background of a specific item). However, I think it is good to pick a philosophy about how to structure one's theme and then follow it as much as possible in order to be consistent and keep the theme easy to use.
 
-I used CSS grid for making the base layout for this page. This made it very easy to e.g. switch around the order of the components on different screen sizes.
+I used CSS grid for making the base layout for this page. This makes it trivial to e.g. switch around the order of the components on different screen sizes and change the layout later.
+
+## Ideas for further development
+
+The structure of the search could be slightly cleaner if the search term was set to an app state such as Redux instead of being in the state of the FAQPage component and being passed to its children as props. However, I felt that taking Redux to use just for that was slightly overkill for the purpose of this exercise. 
+
+On very wide but very low screen sizes, the side navigation and the contact link, which are both fixed in position, will not be scrollable and may overlap. However, as the screen sizes in which this would even happen are very rare, I did not take this into account in the code. To make it absolutely foolproof, a check should be made for this so that they do not overlap and the side navigation can still be scrolled.
