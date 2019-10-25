@@ -1,4 +1,4 @@
-import React, { useState, useRef, useLayoutEffect } from 'react'
+import React, { useState, useRef, useLayoutEffect, useEffect } from 'react'
 import styled, { keyframes } from 'styled-components/macro'
 import ReactMarkdown from 'react-markdown'
 import { uniq } from 'ramda'
@@ -112,6 +112,13 @@ const QAItem = ({ question, searchStr, answer, isOpen }) => {
       }
     },
     [searchStr, showAnswer]
+  )
+
+  useEffect(
+    () => {
+      window.dispatchEvent(new Event('faq-item-toggle'))
+    },
+    [showAnswer]
   )
 
   return (

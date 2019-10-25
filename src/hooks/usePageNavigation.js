@@ -33,7 +33,7 @@ const usePageNavigation = (categories, scrollOffset) => {
         setActiveLinkIndex(activeCategoryIndex)
       }, 100)
 
-      const handleResize = () => {
+      const calculateItemsBottoms = () => {
         itemsBottoms = categories.map(
           link =>
             window.pageYOffset +
@@ -42,12 +42,14 @@ const usePageNavigation = (categories, scrollOffset) => {
         handleScroll()
       }
 
-      handleResize()
+      calculateItemsBottoms()
       window.addEventListener('scroll', handleScroll)
-      window.addEventListener('resize', handleResize)
+      window.addEventListener('resize', calculateItemsBottoms)
+      window.addEventListener('faq-item-toggle', calculateItemsBottoms)
       return () => {
         window.removeEventListener('scroll', handleScroll)
-        window.removeEventListener('resize', handleResize)
+        window.removeEventListener('resize', calculateItemsBottoms)
+        window.addEventListener('faq-item-toggle', calculateItemsBottoms)
       }
     },
     [categories, scrollOffset]
