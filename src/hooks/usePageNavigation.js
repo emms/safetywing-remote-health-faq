@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import throttle from 'lodash.throttle'
 
 const usePageNavigation = (categories, scrollOffset) => {
   const [activeLinkIndex, setActiveLinkIndex] = useState(0)
   const [overrideIndex, setOverrideIndex] = useState(0)
   const [useOverrideIndex, setUseOverrideIndex] = useState(false)
+  const isMounted = useRef()
 
   const createClickHandler = elementId => e => {
     e.preventDefault()
@@ -20,6 +21,7 @@ const usePageNavigation = (categories, scrollOffset) => {
 
   useEffect(
     () => {
+      isMounted.current = true
       let itemsBottoms = []
 
       const handleScroll = throttle(() => {
@@ -30,7 +32,9 @@ const usePageNavigation = (categories, scrollOffset) => {
         if (activeCategoryIndex === -1) {
           activeCategoryIndex = categories.length - 1
         }
-        setActiveLinkIndex(activeCategoryIndex)
+        if (isMounted.current) {
+          setActiveLinkIndex(activeCategoryIndex)
+        }
       }, 100)
 
       const calculateItemsBottoms = () => {
@@ -47,6 +51,7 @@ const usePageNavigation = (categories, scrollOffset) => {
       window.addEventListener('resize', calculateItemsBottoms)
       window.addEventListener('faq-item-toggle', calculateItemsBottoms)
       return () => {
+        isMounted.current = false
         window.removeEventListener('scroll', handleScroll)
         window.removeEventListener('resize', calculateItemsBottoms)
         window.addEventListener('faq-item-toggle', calculateItemsBottoms)
