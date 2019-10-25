@@ -116,6 +116,9 @@ const QAItem = ({ question, searchStr, answer, isOpen }) => {
 
   useEffect(
     () => {
+      // this is done in order to re-calculate the positions of each category
+      // whenever a question is toggled, so that the currently active category
+      // can be shown correctly
       window.dispatchEvent(new Event('faq-item-toggle'))
     },
     [showAnswer]
